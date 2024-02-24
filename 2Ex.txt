@@ -1,0 +1,17 @@
+SELECT supplier as supplier, null as year, null as category, SUM(actions.price) as Total
+FROM actions
+JOIN suppliers on actions.supplier_id = suppliers.id
+GROUP BY supplier
+UNION
+SELECT supplier AS supplier, year(actions.action_date) as year, null as category, SUM(actions.price) as Total
+FROM actions  
+JOIN suppliers on actions.supplier_id = suppliers.id
+GROUP BY supplier, year
+UNION
+SELECT supplier as supplier, year(actions.action_date) as year, categories.category as category, SUM(actions.price) as Total
+FROM actions
+JOIN products on actions.product_id = products.id
+JOIN categories on products.category_id = categories.id
+JOIN suppliers on actions.supplier_id = suppliers.id
+GROUP BY supplier, year, category
+ORDER BY supplier, year, category;

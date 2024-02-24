@@ -1,0 +1,32 @@
+SELECT 
+    YEAR(action_date) AS Year,
+    '' AS Month,
+    '' AS Day,
+    SUM(price) AS Total
+FROM actions
+GROUP BY Year
+UNION
+SELECT 
+    YEAR(action_date) AS Year,
+    '' AS Month,
+    '' AS Day,
+    SUM(price) AS Total
+FROM actions
+GROUP BY Year, Month
+UNION
+SELECT 
+    '' AS Year,
+    Month(action_date) AS Month,
+    '' AS Day,
+    SUM(price) AS Total
+FROM actions
+GROUP BY Month
+UNION
+SELECT 
+    '' AS Year,
+    '' AS Month,
+    Day(action_date) AS Day,
+    SUM(price) AS Total
+FROM actions
+GROUP BY Day
+ORDER BY Year, Month, Day;
